@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replayable — Never lose another job to a missed call</title>
+<meta name="description" content="Replayable instantly texts back every missed call so your trade never loses a job to voicemail. Works with your existing number, set up in minutes. Built for UK trades.">
+<meta property="og:title" content="Replayable — Never lose another job to a missed call">
+<meta property="og:description" content="Instant missed-call text-back for UK trades. Turn missed calls into booked jobs.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B1120">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.className = 'js';</script>
+<style>
+  :root{
+    --brand:#F97316; --brand-2:#FB923C; --brand-strong:#EA580C; --brand-deep:#C2410C;
+    --violet:#7C3AED; --rose:#F43F5E;
+    --ink:#0B1120; --ink-2:#111a2e;
+    --body:#334155; --muted:#64748B; --line:#E2E8F0;
+    --bg:#FFFFFF; --bg-soft:#F8FAFC;
+    --success:#10B981; --success-tint:#ECFDF5;
+    --fh:'Sora',ui-sans-serif,system-ui,sans-serif;
+    --fb:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
+    --maxw:1140px; --r:16px; --r-lg:26px;
+    --sh:0 18px 50px -24px rgba(15,23,42,.35);
+    --sh-glow:0 20px 60px -18px rgba(249,115,22,.55);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--fb);color:var(--body);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:var(--fh);color:var(--ink);margin:0;line-height:1.08;letter-spacing:-.025em;font-weight:700}
+  p{margin:0}
+  a{text-decoration:none;color:inherit}
+  img,svg{display:block;max-width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  section{padding:96px 0}
+  .grad-text{background:linear-gradient(100deg,var(--brand-2),var(--brand),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:8px}
+
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-family:var(--fh);font-weight:700;
+    font-size:1rem;min-height:52px;padding:0 1.6rem;border-radius:14px;border:1px solid transparent;cursor:pointer;
+    transition:transform .2s cubic-bezier(.2,.7,.3,1),box-shadow .25s,background .2s,border-color .2s;white-space:nowrap}
+  .btn-primary{background:linear-gradient(100deg,var(--brand),var(--brand-strong));color:#fff;box-shadow:var(--sh-glow)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 26px 70px -18px rgba(249,115,22,.7)}
+  .btn-glass{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.18);backdrop-filter:blur(6px)}
+  .btn-glass:hover{background:rgba(255,255,255,.16);transform:translateY(-3px)}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:#cbd5e1}
+
+  /* ---------- nav ---------- */
+  header.nav{position:fixed;inset:0 0 auto 0;z-index:60;transition:background .3s,box-shadow .3s,backdrop-filter .3s}
+  header.nav.solid{background:rgba(11,17,32,.72);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+  .nav-in{display:flex;align-items:center;gap:16px;height:74px}
+  .brand{display:flex;align-items:center;gap:.6rem;font-family:var(--fh);font-weight:800;font-size:1.32rem;color:#fff}
+  .brand svg{width:34px;height:34px}
+  .nav-links{display:flex;gap:30px;margin-left:26px}
+  .nav-links a{color:rgba(255,255,255,.82);font-weight:600;font-size:.96rem;transition:color .2s}
+  .nav-links a:hover{color:#fff}
+  .nav-sp{flex:1}
+  .nav-cta{display:flex;gap:12px;align-items:center}
+  @media(max-width:840px){.nav-links{display:none}.nav-cta .btn-glass{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;background:var(--ink);color:#fff;padding:150px 0 90px;overflow:hidden}
+  .aurora{position:absolute;inset:0;z-index:0;filter:blur(70px);opacity:.9}
+  .blob{position:absolute;border-radius:50%;mix-blend-mode:screen;will-change:transform}
+  .b1{width:520px;height:520px;background:radial-gradient(circle,#F97316,transparent 62%);top:-140px;left:-60px;animation:drift1 16s ease-in-out infinite}
+  .b2{width:460px;height:460px;background:radial-gradient(circle,#7C3AED,transparent 62%);top:-40px;right:-40px;animation:drift2 19s ease-in-out infinite}
+  .b3{width:420px;height:420px;background:radial-gradient(circle,#F43F5E,transparent 62%);bottom:-160px;left:38%;animation:drift3 22s ease-in-out infinite}
+  @keyframes drift1{50%{transform:translate(70px,50px) scale(1.12)}}
+  @keyframes drift2{50%{transform:translate(-60px,60px) scale(1.08)}}
+  @keyframes drift3{50%{transform:translate(40px,-50px) scale(1.14)}}
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+  .badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);
+    color:#fff;font-family:var(--fh);font-weight:600;font-size:.8rem;padding:.45rem .9rem;border-radius:999px;margin-bottom:22px;backdrop-filter:blur(6px)}
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(16,185,129,0)}}
+  .hero h1{color:#fff;font-size:clamp(2.5rem,6vw,4rem);font-weight:800;letter-spacing:-.03em}
+  .hero .sub{color:rgba(226,232,240,.86);font-size:clamp(1.08rem,2.2vw,1.32rem);margin-top:1.4rem;max-width:33ch}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:2.2rem}
+  .ticks{display:flex;flex-wrap:wrap;gap:20px;margin-top:2rem;color:rgba(226,232,240,.72);font-size:.9rem;font-weight:500}
+  .ticks span{display:inline-flex;align-items:center;gap:.45rem}
+  .ticks svg{color:var(--success)}
+
+  /* phone */
+  .phone-wrap{position:relative;justify-self:center}
+  .phone{position:relative;z-index:2;width:300px;max-width:82vw;background:#060B18;border:1px solid rgba(255,255,255,.1);
+    border-radius:42px;padding:13px;box-shadow:0 40px 90px -30px rgba(0,0,0,.8)}
+  .screen{background:#F1F5F9;border-radius:31px;overflow:hidden;height:588px;display:flex;flex-direction:column}
+  .screen-top{background:#fff;padding:30px 16px 12px;text-align:center;border-bottom:1px solid var(--line)}
+  .screen-top .n{font-family:var(--fh);font-weight:700;color:var(--ink);font-size:1rem}
+  .screen-top .p{color:var(--muted);font-size:.78rem}
+  .chat{flex:1;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .miss{align-self:center;background:#FEE2E2;color:#B91C1C;font-weight:600;font-size:.74rem;padding:.35rem .75rem;border-radius:999px;display:inline-flex;gap:.35rem;align-items:center}
+  .bub{max-width:82%;padding:.65rem .85rem;border-radius:17px;font-size:.85rem;line-height:1.45;box-shadow:0 1px 2px rgba(15,23,42,.08);opacity:0}
+  .them{align-self:flex-start;background:#fff;color:var(--ink);border-bottom-left-radius:5px}
+  .us{align-self:flex-end;background:linear-gradient(120deg,var(--brand),var(--brand-strong));color:#fff;border-bottom-right-radius:5px}
+  .bub .tg{display:block;font-size:.6rem;font-weight:700;letter-spacing:.05em;opacity:.8;margin-bottom:.2rem;text-transform:uppercase}
+  .js .anim1{animation:pop .5s .3s forwards}.js .anim2{animation:pop .5s 1.5s forwards}
+  .js .anim3{animation:pop .5s 2.7s forwards}.js .anim4{animation:pop .5s 3.6s forwards}
+  @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  html:not(.js) .bub{opacity:1}
+  /* floating stat chips */
+  .chip-float{position:absolute;z-index:3;background:rgba(255,255,255,.95);border-radius:14px;padding:.7rem .9rem;box-shadow:var(--sh);display:flex;gap:.6rem;align-items:center}
+  .chip-float .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:#fff}
+  .chip-float .t{font-family:var(--fh);font-weight:700;color:var(--ink);font-size:.9rem;line-height:1.1}
+  .chip-float .s{color:var(--muted);font-size:.72rem}
+  .cf1{top:54px;left:-34px;animation:bob 4s ease-in-out infinite}
+  .cf2{bottom:70px;right:-30px;animation:bob 4.6s ease-in-out infinite .5s}
+  @keyframes bob{50%{transform:translateY(-12px)}}
+  @media(max-width:520px){.chip-float{display:none}}
+
+  /* ---------- marquee ---------- */
+  .marquee{background:var(--ink-2);color:rgba(255,255,255,.6);padding:20px 0;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.06)}
+  .track{display:inline-flex;gap:56px;font-family:var(--fh);font-weight:600;font-size:1rem;animation:scroll 26s linear infinite}
+  .track span{display:inline-flex;align-items:center;gap:56px}
+  .track b{color:var(--brand-2)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- stats ---------- */
+  .stats{background:var(--bg-soft)}
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center}
+  .stat .big{font-family:var(--fh);font-weight:800;font-size:clamp(2.6rem,6vw,3.6rem);letter-spacing:-.03em}
+  .stat .lbl{color:var(--muted);font-size:1rem;margin-top:.4rem}
+
+  /* ---------- section head ---------- */
+  .sh{max-width:660px;margin:0 auto 56px;text-align:center}
+  .sh .k{font-family:var(--fh);font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-strong)}
+  .sh h2{font-size:clamp(2rem,4.5vw,2.9rem);margin-top:.8rem;font-weight:800}
+  .sh p{color:var(--muted);font-size:1.12rem;margin-top:1rem}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .step{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:34px 26px;transition:transform .25s,box-shadow .25s,border-color .25s}
+  .step:hover{transform:translateY(-6px);box-shadow:var(--sh);border-color:transparent}
+  .step .num{font-family:var(--fh);font-weight:800;font-size:.9rem;color:#fff;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(120deg,var(--brand),var(--brand-strong));box-shadow:var(--sh-glow)}
+  .step .ic{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#FFF4ED,#FFE4D3);color:var(--brand-strong);display:grid;place-items:center;margin:20px 0 16px}
+  .step h3{font-size:1.28rem;margin-bottom:.5rem}
+  .step p{font-size:.98rem}
+
+  /* ---------- before/after ---------- */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .cmp{border-radius:var(--r-lg);padding:34px 30px;position:relative;overflow:hidden}
+  .cmp.bad{background:#fff;border:1px solid var(--line)}
+  .cmp.good{background:linear-gradient(160deg,#0B1120,#15213b);color:#fff;box-shadow:var(--sh)}
+  .cmp h3{font-size:1.3rem;display:flex;align-items:center;gap:.6rem;margin-bottom:1.3rem}
+  .cmp.bad h3{color:var(--muted)}.cmp.good h3{color:#fff}
+  .cmp ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1rem}
+  .cmp li{display:flex;gap:.75rem;align-items:flex-start;font-size:1rem}
+  .cmp.bad li{color:var(--body)}.cmp.good li{color:rgba(226,232,240,.92)}
+  .cmp li svg{flex:none;margin-top:2px}
+  .cmp.bad li svg{color:#CBD5E1}.cmp.good li svg{color:var(--success)}
+  .cmp.good::after{content:"";position:absolute;width:220px;height:220px;background:radial-gradient(circle,rgba(249,115,22,.4),transparent 65%);bottom:-90px;right:-60px;filter:blur(30px)}
+
+  /* ---------- bento features ---------- */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .cell{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;overflow:hidden}
+  .cell:hover{transform:translateY(-5px);box-shadow:var(--sh);border-color:transparent}
+  .cell .ic{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#FFF4ED,#FFE4D3);color:var(--brand-strong);display:grid;place-items:center;margin-bottom:16px}
+  .cell h3{font-size:1.16rem;margin-bottom:.4rem}
+  .cell p{font-size:.96rem}
+  .cell.feat{grid-column:span 2;background:linear-gradient(120deg,var(--brand-strong),var(--brand));color:#fff;border:none}
+  .cell.feat .ic{background:rgba(255,255,255,.18);color:#fff}
+  .cell.feat h3{color:#fff}.cell.feat p{color:rgba(255,255,255,.9)}
+
+  /* ---------- testimonials ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .quote{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+  .quote:hover{transform:translateY(-5px);box-shadow:var(--sh)}
+  .stars{display:flex;gap:2px;color:#F59E0B;margin-bottom:1rem}
+  .quote p{color:var(--ink);font-size:1.02rem;flex:1;line-height:1.6}
+  .by{display:flex;align-items:center;gap:.8rem;margin-top:1.4rem}
+  .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-strong));color:#fff;display:grid;place-items:center;font-family:var(--fh);font-weight:700;flex:none}
+  .by .nm{font-family:var(--fh);font-weight:700;color:var(--ink);font-size:.96rem}
+  .by .rl{color:var(--muted);font-size:.84rem}
+
+  /* ---------- pricing ---------- */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1000px;margin:0 auto;align-items:stretch}
+  .plan{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:34px 28px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+  .plan:hover{transform:translateY(-6px);box-shadow:var(--sh)}
+  .plan.top{background:linear-gradient(165deg,#0B1120,#16213c);color:#fff;position:relative;box-shadow:var(--sh)}
+  .plan.top .tag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(100deg,var(--brand),var(--brand-strong));color:#fff;font-family:var(--fh);font-weight:700;font-size:.74rem;padding:.35rem .9rem;border-radius:999px;box-shadow:var(--sh-glow)}
+  .plan h3{font-size:1.35rem}.plan.top h3{color:#fff}
+  .price{font-family:var(--fh);font-weight:800;font-size:3rem;letter-spacing:-.03em;margin:.5rem 0 .1rem;color:var(--ink)}
+  .plan.top .price{color:#fff}.price small{font-size:1rem;font-weight:600;color:var(--muted)}
+  .plan .d{font-size:.92rem;color:var(--muted);min-height:2.6em}.plan.top .d{color:rgba(226,232,240,.75)}
+  .plan ul{list-style:none;padding:0;margin:1.4rem 0;display:flex;flex-direction:column;gap:.8rem;flex:1}
+  .plan li{display:flex;gap:.6rem;align-items:flex-start;font-size:.96rem}
+  .plan li svg{color:var(--success);flex:none;margin-top:2px}.plan.top li{color:rgba(226,232,240,.92)}
+
+  /* ---------- faq ---------- */
+  .faq{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:0 1.5rem;transition:box-shadow .2s,border-color .2s}
+  details[open]{box-shadow:var(--sh);border-color:transparent}
+  summary{list-style:none;cursor:pointer;font-family:var(--fh);font-weight:700;color:var(--ink);padding:1.3rem 0;display:flex;justify-content:space-between;gap:1rem;align-items:center;font-size:1.08rem}
+  summary::-webkit-details-marker{display:none}
+  summary .cv{transition:transform .25s;color:var(--brand-strong);flex:none}
+  details[open] .cv{transform:rotate(180deg)}
+  details p{color:var(--body);padding:0 0 1.3rem;font-size:1rem}
+
+  /* ---------- cta ---------- */
+  .cta{position:relative;overflow:hidden;background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:74px 40px;text-align:center;box-shadow:var(--sh)}
+  .cta .aurora{opacity:.7}
+  .cta h2{position:relative;z-index:2;color:#fff;font-size:clamp(2rem,4.5vw,3rem)}
+  .cta p{position:relative;z-index:2;color:rgba(226,232,240,.88);font-size:1.16rem;margin:1.1rem auto 2.2rem;max-width:44ch}
+  .cta .btn-primary{position:relative;z-index:2}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:#94A3B8;padding:64px 0 30px}
+  .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:36px}
+  .foot .brand{color:#fff;margin-bottom:14px}
+  .foot h4{color:#fff;font-size:.95rem;margin-bottom:14px;font-family:var(--fh)}
+  .foot a{display:block;color:#94A3B8;padding:.3rem 0;transition:color .2s}.foot a:hover{color:#fff}
+  .foot .desc{max-width:34ch;font-size:.95rem;line-height:1.6}
+  .legal{border-top:1px solid rgba(255,255,255,.1);margin-top:44px;padding-top:24px;font-size:.85rem;color:#64748B;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* ---------- scroll reveal ---------- */
+  .js .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+  .js .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;text-align:center}
+    .hero .sub,.hero .badge{margin-left:auto;margin-right:auto}
+    .hero-cta,.ticks{justify-content:center}
+    .stat-grid,.steps,.compare,.bento,.grid3,.plans{grid-template-columns:1fr}
+    .cell.feat{grid-column:span 1}
+    .foot{grid-template-columns:1fr 1fr}
+  }
+  @media(min-width:560px) and (max-width:900px){.steps,.grid3,.bento{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.foot{grid-template-columns:1fr}}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .js .reveal{opacity:1;transform:none}
+    .bub{opacity:1!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="11" fill="url(#g)"/><path d="M23.5 12.5H14a4 4 0 0 0-4 4v5a4 4 0 0 0 4 4h1.5v4l4.2-4H26a4 4 0 0 0 4-4v-5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 9.5l-3.5 3 3.5 3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="g" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#FB923C"/><stop offset="1" stop-color="#EA580C"/></linearGradient></defs></svg>
+      Replayable
+    </a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#why">Why it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-sp"></div>
+    <div class="nav-cta">
+      <a class="btn btn-glass" href="#pricing" style="min-height:44px;padding:0 1.1rem;font-size:.92rem">Pricing</a>
+      <a class="btn btn-primary" href="mailto:replayable1@gmail.com?subject=Replayable%20demo" style="min-height:44px;padding:0 1.2rem;font-size:.92rem">Get started</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="badge"><span class="dot"></span> Missed-call text-back for UK trades</span>
+      <h1>Turn every <span class="grad-text">missed call</span> into a booked job.</h1>
+      <p class="sub">When you can't pick up, Replayable texts the caller back in seconds — so the lead books with you, not the next name on Google.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="mailto:replayable1@gmail.com?subject=Replayable%20demo">Book a 10-min demo</a>
+        <a class="btn btn-glass" href="#how">See how it works</a>
+      </div>
+      <div class="ticks">
+        <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Keeps your number</span>
+        <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> No app to install</span>
+        <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Live in minutes</span>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="chip-float cf1"><span class="ic" style="background:linear-gradient(135deg,#10B981,#059669)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><span class="t">Job booked</span><span class="s">from a missed call</span></span></div>
+      <div class="chip-float cf2"><span class="ic" style="background:linear-gradient(135deg,#F97316,#EA580C)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="10"/></svg></span><span><span class="t">&lt; 60 sec</span><span class="s">reply time</span></span></div>
+      <div class="phone">
+        <div class="screen">
+          <div class="screen-top"><div class="n">New enquiry</div><div class="p">07700 900 812</div></div>
+          <div class="chat">
+            <div class="miss"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-6 6"/><path d="m22 2-6 6"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81"/></svg> Missed call · 2:14pm</div>
+            <div class="bub us anim1"><span class="tg">Auto-sent by Replayable</span>Hi, this is Dave from Dave's Plumbing 👋 Sorry I missed your call — I'm on a job. What do you need doing and I'll get you a quote today?</div>
+            <div class="bub them anim2">Hiya — leaking boiler in the kitchen, can you come out?</div>
+            <div class="bub them anim3">Free tomorrow morning?</div>
+            <div class="bub us anim4">Yes — I can be there for 9. I'll pop you in 👍</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>Plumbers <b>·</b> Electricians <b>·</b> Roofers <b>·</b> Builders <b>·</b> Gas Engineers <b>·</b> Landscapers <b>·</b> Locksmiths <b>·</b> Plasterers <b>·</b> </span>
+    <span>Plumbers <b>·</b> Electricians <b>·</b> Roofers <b>·</b> Builders <b>·</b> Gas Engineers <b>·</b> Landscapers <b>·</b> Locksmiths <b>·</b> Plasterers <b>·</b> </span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap stat-grid">
+    <div class="stat reveal"><div class="big grad-text"><span data-count="1">0</span> in <span data-count="4">0</span></div><div class="lbl">calls to trades go unanswered</div></div>
+    <div class="stat reveal"><div class="big grad-text"><span data-count="85">0</span>%</div><div class="lbl">of missed callers won't leave a voicemail</div></div>
+    <div class="stat reveal"><div class="big grad-text">&lt;<span data-count="60">0</span>s</div><div class="lbl">to text every caller back, automatically</div></div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="wrap">
+    <div class="sh reveal"><span class="k">How it works</span><h2>Three steps. Zero effort from you.</h2><p>Replayable sits quietly behind your existing number and only kicks in when you can't answer.</p></div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="num">1</span>
+        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 6-6 6"/><path d="m22 2-6 6"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81"/></svg></div>
+        <h3>You miss a call</h3><p>On the tools, up a ladder, or driving. Replayable spots the missed call instantly.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num">2</span>
+        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg></div>
+        <h3>We text them back</h3><p>Within seconds the caller gets a friendly text in your name, asking what they need.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num">3</span>
+        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></div>
+        <h3>You win the job</h3><p>Reply when you're free — the lead's still warm, not gone to the next tradesperson.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY / before-after -->
+<section id="why" style="background:var(--bg-soft)">
+  <div class="wrap">
+    <div class="sh reveal"><span class="k">Why it matters</span><h2>Same missed call. Very different day.</h2></div>
+    <div class="compare">
+      <div class="cmp bad reveal">
+        <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> Without Replayable</h3>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg> Call rings out to voicemail</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg> Caller hangs up, tries the next result</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg> You never even knew they called</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/></svg> A £400 job quietly walks away</li>
+        </ul>
+      </div>
+      <div class="cmp good reveal">
+        <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg> With Replayable</h3>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Caller gets a text back in seconds</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> They reply with the job details</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> You pick it up when you're free</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> That £400 job is booked in</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES bento -->
+<section>
+  <div class="wrap">
+    <div class="sh reveal"><span class="k">Built for the tools, not the desk</span><h2>Everything a busy trade needs.</h2></div>
+    <div class="bento">
+      <div class="cell feat reveal">
+        <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="10"/></svg></div>
+        <h3>Replies in under a minute</h3><p>Speed wins the job — callers hear back before they've dialled anyone else. That instant response is the whole game.</p>
+      </div>
+      <div class="cell reveal">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81"/></svg></div>
+        <h3>Keeps your number</h3><p>No porting, no new SIM. Works alongside the number you already give out.</p>
+      </div>
+      <div class="cell reveal">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <h3>Sounds like you</h3><p>Your name, your tone — a message that feels personal, not robotic.</p>
+      </div>
+      <div class="cell reveal">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+        <h3>See every lead</h3><p>A simple dashboard shows who called, what they wanted, and which jobs you've won.</p>
+      </div>
+      <div class="cell feat reveal" style="background:linear-gradient(135deg,#0B1120,#182036);color:#fff">
+        <div class="ic" style="background:rgba(255,255,255,.14);color:#fff"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h3 style="color:#fff">Runs on its own, day &amp; night</h3><p style="color:rgba(226,232,240,.85)">Set it once and forget it. Replayable handles every missed call around the clock — weekends, evenings, whenever — without you lifting a finger.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--bg-soft)">
+  <div class="wrap">
+    <div class="sh reveal"><span class="k">From the vans</span><h2>Trades who stopped letting jobs ring out.</h2></div>
+    <div class="grid3">
+      <figure class="quote reveal" style="margin:0">
+        <div class="stars">★★★★★</div>
+        <p>"I used to lose two or three jobs a week to voicemail. Now they get a text before I'm even off the roof. Paid for itself in the first day."</p>
+        <figcaption class="by"><span class="av">DM</span><span><span class="nm">Dave M.</span><br><span class="rl">Roofer · Leeds</span></span></figcaption>
+      </figure>
+      <figure class="quote reveal" style="margin:0">
+        <div class="stars">★★★★★</div>
+        <p>"Customers actually say thanks for the quick reply. Makes a one-man band look like a proper outfit. Dead simple to set up too."</p>
+        <figcaption class="by"><span class="av">SK</span><span><span class="nm">Sam K.</span><br><span class="rl">Electrician · Bristol</span></span></figcaption>
+      </figure>
+      <figure class="quote reveal" style="margin:0">
+        <div class="stars">★★★★★</div>
+        <p>"I'm on jobs all day and can't answer. This grabs every enquiry and I ring them back at tea break. Booked out three weeks solid now."</p>
+        <figcaption class="by"><span class="av">RP</span><span><span class="nm">Ryan P.</span><br><span class="rl">Plumber · Manchester</span></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sh reveal"><span class="k">Pricing</span><h2>One job pays for the year.</h2><p>Simple monthly plans, no contract. Cancel any time.</p></div>
+    <div class="plans">
+      <div class="plan reveal">
+        <h3>Solo</h3><div class="price">£29<small>/mo</small></div>
+        <div class="d">For one-person trades who don't want to miss a thing.</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Auto text-back on every missed call</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Your own number &amp; branding</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Lead dashboard</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Email support</li>
+        </ul>
+        <a class="btn btn-ghost" href="mailto:replayable1@gmail.com?subject=Replayable%20Solo">Start with Solo</a>
+      </div>
+      <div class="plan top reveal">
+        <span class="tag">Most popular</span>
+        <h3>Pro</h3><div class="price">£49<small>/mo</small></div>
+        <div class="d">For growing trades that live and die by the phone.</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Everything in Solo</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Custom follow-up messages</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Google review requests</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Priority phone support</li>
+        </ul>
+        <a class="btn btn-primary" href="mailto:replayable1@gmail.com?subject=Replayable%20Pro">Get started</a>
+      </div>
+      <div class="plan reveal">
+        <h3>Team</h3><div class="price">£89<small>/mo</small></div>
+        <div class="d">For firms with a few vans and multiple numbers.</div>
+        <ul>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Everything in Pro</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Up to 5 numbers</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Shared team inbox</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Dedicated account manager</li>
+        </ul>
+        <a class="btn btn-ghost" href="mailto:replayable1@gmail.com?subject=Replayable%20Team">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--bg-soft)">
+  <div class="wrap">
+    <div class="sh reveal"><span class="k">FAQ</span><h2>The questions trades actually ask.</h2></div>
+    <div class="faq">
+      <details open class="reveal"><summary>Do I need a new phone or number?<svg class="cv" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><p>No. Replayable works alongside the number you already give out. Nothing changes for you or your customers — we just step in when a call goes unanswered.</p></details>
+      <details class="reveal"><summary>Will customers know it's automated?<svg class="cv" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><p>It reads like a normal text from you — your name, your wording. Most people just think you're quick off the mark. You can tweak the message any time.</p></details>
+      <details class="reveal"><summary>How quickly can I be up and running?<svg class="cv" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><p>Usually the same day. We hop on one short call to get you set up, then you're catching missed-call leads straight away.</p></details>
+      <details class="reveal"><summary>What if I don't win enough extra work to justify it?<svg class="cv" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><p>There's no contract — cancel any time. Most trades only need one recovered job a year to cover the whole cost, and the dashboard shows exactly which leads it saved.</p></details>
+      <details class="reveal"><summary>Which trades is it for?<svg class="cv" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary><p>Any trade that lives off the phone — plumbers, electricians, roofers, builders, gas engineers, landscapers, locksmiths and more. If a missed call means a lost job, Replayable is for you.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="wrap">
+    <div class="cta reveal">
+      <div class="aurora"><div class="blob b1" style="top:-120px;left:10%"></div><div class="blob b2" style="top:-60px;right:10%"></div></div>
+      <h2>Every missed call is a job someone else just got.</h2>
+      <p>Let's fix that today. Book a 10-minute demo and we'll have you catching leads by this afternoon.</p>
+      <a class="btn btn-primary" href="mailto:replayable1@gmail.com?subject=Replayable%20demo">Book your free demo</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="brand"><svg viewBox="0 0 40 40" width="30" height="30" fill="none"><rect width="40" height="40" rx="11" fill="url(#g2)"/><path d="M23.5 12.5H14a4 4 0 0 0-4 4v5a4 4 0 0 0 4 4h1.5v4l4.2-4H26a4 4 0 0 0 4-4v-5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 9.5l-3.5 3 3.5 3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="g2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#FB923C"/><stop offset="1" stop-color="#EA580C"/></linearGradient></defs></svg> Replayable</div>
+        <p class="desc">Missed-call text-back for UK trades. Turn missed calls into booked jobs — automatically.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <a href="#how">How it works</a>
+        <a href="#why">Why it works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="mailto:replayable1@gmail.com">Contact us</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Replayable · replayable.co.uk</span>
+      <span>Never lose another job to a missed call.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // sticky nav background
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('solid', window.scrollY > 20);
+  onScroll(); addEventListener('scroll', onScroll, { passive:true });
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll reveal
+  const revs = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    revs.forEach(r => r.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revs.forEach((r, i) => { r.style.transitionDelay = (Math.min(i % 3, 2) * 0.08) + 's'; io.observe(r); });
+  }
+
+  // count-up
+  const counters = document.querySelectorAll('[data-count]');
+  const runCount = (el) => {
+    const target = +el.dataset.count; const dur = 1100; const t0 = performance.now();
+    const step = (t) => { const p = Math.min((t - t0) / dur, 1); el.textContent = Math.round(p * (target)); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  if (reduce || !('IntersectionObserver' in window)) {
+    counters.forEach(c => c.textContent = c.dataset.count);
+  } else {
+    const cio = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { runCount(e.target); cio.unobserve(e.target); } });
+    }, { threshold: 0.5 });
+    counters.forEach(c => cio.observe(c));
+  }
+</script>
+</body>
+</html>
