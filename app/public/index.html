@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replayable — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="login-wrap hidden">
+  <div class="login-card">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="11" fill="#EA580C"/><path d="M23.5 12.5H14a4 4 0 0 0-4 4v5a4 4 0 0 0 4 4h1.5v4l4.2-4H26a4 4 0 0 0 4-4v-5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 9.5l-3.5 3 3.5 3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Replayable
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:.9rem;margin:0 0 18px">Sign in to your dashboard</p>
+    <label for="pw">Password</label>
+    <input type="password" id="pw" placeholder="Enter admin password" autocomplete="current-password">
+    <button class="btn btn-primary" style="width:100%;margin-top:16px" onclick="doLogin()">Sign in</button>
+    <p id="loginErr" style="color:var(--danger);font-size:.85rem;text-align:center;margin-top:10px"></p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand">
+        <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="11" fill="#EA580C"/><path d="M23.5 12.5H14a4 4 0 0 0-4 4v5a4 4 0 0 0 4 4h1.5v4l4.2-4H26a4 4 0 0 0 4-4v-5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 9.5l-3.5 3 3.5 3" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Replayable
+      </div>
+      <span id="modeBadge" class="mode-badge mode-sim">SIMULATION</span>
+      <div class="spacer"></div>
+      <select id="bizSelect" onchange="selectBusiness(this.value)"></select>
+      <button class="btn btn-sm btn-ghost" onclick="openBusinessModal(true)">Settings</button>
+      <button class="btn btn-sm btn-ghost" onclick="openBusinessModal()">+ Client</button>
+      <button class="link-btn" id="logoutBtn" onclick="doLogout()">Log out</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats-row">
+      <div class="stat accent"><div class="n" id="stTotal">0</div><div class="l">Leads captured</div></div>
+      <div class="stat"><div class="n" id="stToday">0</div><div class="l">New today</div></div>
+      <div class="stat"><div class="n" id="stReplied">0</div><div class="l">Replied</div></div>
+      <div class="stat"><div class="n" id="stWon">0</div><div class="l">Jobs won</div></div>
+    </div>
+
+    <div class="grid">
+      <!-- Leads -->
+      <div class="panel">
+        <div class="panel-head"><h3>Leads</h3><span class="spacer"></span><button class="btn btn-sm btn-ghost" onclick="loadLeads()">Refresh</button></div>
+        <div id="leadList"></div>
+      </div>
+
+      <!-- Conversation -->
+      <div class="panel">
+        <div class="panel-head conv-head">
+          <span id="convTitle" class="num">Select a lead</span>
+          <div class="status-btns" id="statusBtns"></div>
+        </div>
+        <div class="thread" id="thread"><div class="empty">Pick a lead on the left to see the conversation.</div></div>
+        <div class="compose hidden" id="compose">
+          <input type="text" id="replyBox" placeholder="Reply to this customer…" onkeydown="if(event.key==='Enter')sendReply()">
+          <button class="btn btn-primary btn-sm" onclick="sendReply()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="tools">
+      <div class="card">
+        <h3>Test it — simulate a missed call</h3>
+        <p class="sub">Runs the exact live flow (no Twilio needed). Watch the lead appear on the left and the auto-text land in the conversation.</p>
+        <div class="sim-row">
+          <input type="tel" id="simNumber" placeholder="Caller number e.g. +447700900555" value="+447700900555">
+          <button class="btn btn-primary btn-sm" onclick="simulateMissed()">Simulate missed call</button>
+        </div>
+        <div class="sim-row">
+          <input type="text" id="simReply" placeholder="Customer's reply text…" value="Yes please, can you come tomorrow morning?">
+          <button class="btn btn-ghost btn-sm" onclick="simulateReply()">Simulate their reply</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Go live with Twilio</h3>
+        <p class="sub">Simulation mode texts are logged, not sent. To send real SMS:</p>
+        <ol class="setup">
+          <li>Create a <a href="https://www.twilio.com" target="_blank" rel="noopener">Twilio</a> account &amp; buy a UK number.</li>
+          <li>Put <code>TWILIO_ACCOUNT_SID</code> &amp; <code>TWILIO_AUTH_TOKEN</code> in <code>app/.env</code>.</li>
+          <li>Point the number's Voice webhook to <code>/webhooks/voice</code> and Messaging webhook to <code>/webhooks/sms</code>.</li>
+          <li>Set each client's forward-to number in their settings.</li>
+          <li>Restart — the badge turns <strong>LIVE</strong>.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Business modal -->
+<div id="bizModal" class="overlay hidden">
+  <div class="modal">
+    <div class="modal-head"><h3 id="bizModalTitle">Add client</h3><button class="x" onclick="closeBusinessModal()">×</button></div>
+    <div class="modal-body">
+      <label>Business name</label>
+      <input type="text" id="f_name" placeholder="Dave's Plumbing">
+      <div class="row">
+        <div><label>Owner's phone (rings first)</label><input type="tel" id="f_owner" placeholder="+447700900123"></div>
+        <div><label>Twilio number (their new line)</label><input type="tel" id="f_twilio" placeholder="+447700900999"></div>
+      </div>
+      <label>Auto-reply text <span class="hint" style="display:inline">— use <code>{business}</code></span></label>
+      <textarea id="f_template"></textarea>
+      <div class="row">
+        <div><label>Ring timeout (seconds)</label><input type="number" id="f_timeout" value="18" min="5" max="60"></div>
+        <div><label>Google review link (optional)</label><input type="url" id="f_review" placeholder="https://g.page/r/…"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" id="bizDeleteBtn" onclick="deleteBusiness()" style="margin-right:auto;color:var(--danger)">Delete</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeBusinessModal()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="saveBusiness()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>
