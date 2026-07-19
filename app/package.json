@@ -1,0 +1,15 @@
+{
+  "name": "replayable",
+  "version": "1.0.0",
+  "description": "Replayable — missed-call text-back engine for trades",
+  "type": "module",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check-twilio": "node check-twilio.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}
