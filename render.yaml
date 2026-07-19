@@ -1,0 +1,22 @@
+# Render Blueprint — deploys the Replayable app.
+# In Render: New +  ->  Blueprint  ->  pick this repo. Render reads this file,
+# then prompts you to paste the three secret values (they are never stored in git).
+services:
+  - type: web
+    name: replayable
+    runtime: node
+    rootDir: app
+    plan: free            # free tier sleeps after ~15 min idle; upgrade to keep it always-on
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.11.0     # node:sqlite requires Node >= 22.5
+      - key: TWILIO_ACCOUNT_SID
+        sync: false        # Render will prompt you for this
+      - key: TWILIO_AUTH_TOKEN
+        sync: false        # prompted (secret)
+      - key: ADMIN_PASSWORD
+        sync: false        # prompted — set a strong password; the dashboard is public
