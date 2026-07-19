@@ -1,0 +1,21 @@
+# Netlify configuration for the Replayable marketing site.
+# Only the static site/ folder is published — the app/ backend and other repo
+# files are never exposed on the public site.
+[build]
+  publish = "site"
+  command = ""
+
+# Send www to the bare domain (set up once the custom domain is attached).
+[[redirects]]
+  from = "https://www.replayable.co.uk/*"
+  to = "https://replayable.co.uk/:splat"
+  status = 301
+  force = true
+
+# Basic security headers for a static marketing site.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
