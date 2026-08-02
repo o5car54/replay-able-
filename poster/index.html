@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE HANGOVER — One Sheet</title>
+<style>
+  :root{
+    --poster-w: 1200px;   /* poster natural width; page scales down on small screens */
+    --gold:#d8a24a;
+    --gold-2:#f4d58a;
+    --ink:#08090b;
+    --grime:#141210;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#111;color:#fff;font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{display:flex;justify-content:center;padding:28px 14px 60px}
+
+  /* ---- the poster ---- */
+  .poster{
+    position:relative;
+    width:var(--poster-w);
+    max-width:100%;
+    aspect-ratio:2/3;
+    background:#0b0b0d;
+    overflow:hidden;
+    box-shadow:0 40px 120px -30px rgba(0,0,0,.9);
+    display:flex;
+    flex-direction:column;
+  }
+  /* film grain + vignette over everything */
+  .poster::after{
+    content:"";position:absolute;inset:0;z-index:40;pointer-events:none;
+    background:
+      radial-gradient(120% 90% at 50% 30%, transparent 55%, rgba(0,0,0,.65) 100%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/></svg>");
+    mix-blend-mode:overlay;
+  }
+
+  /* ---- hero (group shot) ---- */
+  .hero{
+    position:relative;
+    flex:1 1 auto;
+    min-height:0;
+    background:#17140f;
+    overflow:hidden;
+  }
+  .hero img{
+    width:100%;height:100%;object-fit:cover;object-position:center 30%;
+    filter:grayscale(.35) contrast(1.12) saturate(.8) brightness(.86) sepia(.18);
+  }
+  .hero .slot-label{position:absolute;top:12px;left:12px}
+  /* warm neon tint + heavy bottom fade so the title sits on darkness */
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:2;
+    background:
+      linear-gradient(180deg, rgba(8,9,11,.55) 0%, transparent 22% 55%, rgba(8,9,11,.85) 88%, #0b0b0d 100%),
+      radial-gradient(80% 50% at 50% 40%, rgba(216,162,74,.18), transparent 70%);
+  }
+
+  /* tagline above title */
+  .tagline{
+    position:absolute;left:0;right:0;bottom:20%;z-index:5;text-align:center;
+    font-size:clamp(11px,1.5vw,20px);letter-spacing:.32em;text-transform:uppercase;
+    color:#e9e2d2;text-shadow:0 2px 10px rgba(0,0,0,.9);
+  }
+
+  /* ---- title block ---- */
+  .titleblock{
+    position:relative;z-index:6;
+    background:#0b0b0d;
+    padding:6px 0 0;
+    text-align:center;
+  }
+  .kicker{
+    font-size:clamp(9px,1.2vw,15px);letter-spacing:.5em;text-transform:uppercase;
+    color:var(--gold);opacity:.9;margin-bottom:4px;
+  }
+  .title{
+    font-family:"Times New Roman",Georgia,serif;
+    font-weight:700;line-height:.9;letter-spacing:.02em;
+    font-size:clamp(46px,11vw,150px);
+    background:linear-gradient(180deg,var(--gold-2),var(--gold) 55%,#8a5f22);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 2px 0 rgba(0,0,0,.4);
+    padding:0 12px;
+  }
+  .subtitle{
+    font-family:"Times New Roman",Georgia,serif;font-style:italic;
+    font-size:clamp(15px,3vw,40px);color:#f4ead2;margin-top:-2px;
+    letter-spacing:.04em;
+  }
+
+  /* ---- the four-photo strip ---- */
+  .strip{
+    position:relative;z-index:6;background:#0b0b0d;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:5px;
+    padding:12px 14px 8px;
+  }
+  .strip .cell{position:relative;aspect-ratio:3/4;overflow:hidden;background:#1a1712;
+    border:1px solid rgba(216,162,74,.28);}
+  .strip .cell img{width:100%;height:100%;object-fit:cover;
+    filter:grayscale(.3) contrast(1.1) saturate(.82) brightness(.9) sepia(.14);}
+
+  /* ---- billing / credits ---- */
+  .billing{
+    position:relative;z-index:6;background:#0b0b0d;
+    padding:6px 16px 16px;text-align:center;
+  }
+  .cast{
+    font-size:clamp(8px,1.3vw,15px);letter-spacing:.14em;text-transform:uppercase;
+    color:#cfc7b6;font-weight:700;
+  }
+  .credits{
+    margin-top:7px;font-size:clamp(6px,.95vw,10px);letter-spacing:.06em;
+    color:#8c8577;line-height:1.5;text-transform:uppercase;
+    font-family:"Arial Narrow",Arial,sans-serif;
+  }
+  .credits b{color:#b9b1a0;font-weight:700}
+  .rated{
+    display:inline-block;margin-top:10px;border:2px solid #cfc7b6;color:#cfc7b6;
+    font-weight:800;font-size:clamp(9px,1.4vw,16px);letter-spacing:.1em;
+    padding:2px 10px;
+  }
+
+  /* ---- empty-slot placeholder styling (shows until real photos added) ---- */
+  .slot-label{
+    z-index:3;position:absolute;top:6px;left:6px;
+    background:rgba(216,162,74,.9);color:#111;font-weight:800;
+    font-size:11px;letter-spacing:.06em;padding:2px 7px;border-radius:3px;
+  }
+  img{background:#1a1712}
+  img:not([src]),img[src=""]{opacity:0}
+
+  @media print{
+    body{padding:0;background:#fff}
+    .poster{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+  <div class="poster">
+
+    <!-- HERO: the group lineup (photo5) -->
+    <div class="hero">
+      <span class="slot-label">photos/photo5.jpg</span>
+      <img src="photos/photo5.jpg" alt="The crew">
+      <div class="tagline">Some memories are best forgotten</div>
+    </div>
+
+    <!-- TITLE -->
+    <div class="titleblock">
+      <div class="kicker">What happened that night stays that night</div>
+      <div class="title">THE HANGOVER</div>
+      <div class="subtitle">Part IV — The Reunion</div>
+    </div>
+
+    <!-- FOUR PHOTO STRIP (photo1–4) -->
+    <div class="strip">
+      <div class="cell"><span class="slot-label">photo1</span><img src="photos/photo1.jpg" alt=""></div>
+      <div class="cell"><span class="slot-label">photo2</span><img src="photos/photo2.jpg" alt=""></div>
+      <div class="cell"><span class="slot-label">photo3</span><img src="photos/photo3.jpg" alt=""></div>
+      <div class="cell"><span class="slot-label">photo4</span><img src="photos/photo4.jpg" alt=""></div>
+    </div>
+
+    <!-- BILLING -->
+    <div class="billing">
+      <div class="cast">The Lads &nbsp;•&nbsp; The Legends &nbsp;•&nbsp; The Player of the Month</div>
+      <div class="credits">
+        A NIGHT OUT PRODUCTION &nbsp;“THE HANGOVER PART IV”&nbsp;
+        <b>STARRING</b> THE CREW &nbsp; <b>WITH</b> TWO BOTTLES OF PLAYER-OF-THE-MONTH BUBBLY<br>
+        <b>WARDROBE</b> SATIN SHIRTS &amp; SUNGLASSES INDOORS &nbsp; <b>STUNTS</b> THE COFFEE-TABLE LINEUP<br>
+        <b>CATERING</b> WHATEVER WAS LEFT &nbsp; <b>SOUNDTRACK</b> THE GROUP CHAT
+        <div class="rated">R &nbsp; RESTRICTED — CONTAINS QUESTIONABLE DECISIONS</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
